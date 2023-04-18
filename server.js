@@ -1,12 +1,16 @@
-const express = require('express');
-const db = require('./config/connection');
+const express = require("express");
+const db = require("./config/connection");
+const routes = require("./routes");
 
 const app = express();
-const PORT = 3005;
+const PORT = process.env.PORT || 3002;
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
+app.use(routes);
 
-app.use(require('./routes'));
-
-db.once('open', () => app.listen(PORT, ()=> console.log(`Now listening on http://localhost:${PORT}`)));
+db.once("open", () => {
+  app.listen(PORT, () => {
+    console.log(`Now listening on http://localhost:${PORT}`);
+  });
+});
